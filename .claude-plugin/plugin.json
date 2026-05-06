@@ -1,0 +1,18 @@
+{
+  "name": "cross-wave",
+  "description": "CROSS WAVE (https://wave.crosstoken.io) — Open Streamer Economy rewards platform. Read-path (info / missions / campaigns) anonymous; auth-path (login / whoami / referral / submit) via paste-token JWT. v0.2.",
+  "author": {
+    "name": "to-nexus"
+  },
+  "homepage": "https://github.com/to-nexus/skill-cross-wave",
+  "keywords": [
+    "cross-wave",
+    "cross-chain",
+    "streamer-economy",
+    "rewards",
+    "missions",
+    "shorts",
+    "tiktok",
+    "nexus"
+  ]
+}

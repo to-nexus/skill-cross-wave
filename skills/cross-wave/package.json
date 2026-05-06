@@ -1,0 +1,11 @@
+{
+  "name": "cross-wave",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "CROSS WAVE driver — read-path live against wave-client-api.crosstoken.io; auth-path uses paste-the-access-token (CROSSx wallet OAuth is browser-only).",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "internal: see references/cross-wave.md §2 for field semantics",
+  "version": "0.2.0",
+  "note": "Read-path slots populated via JS-bundle reverse-engineering + anonymous endpoint probing on 2026-05-04. Authenticated slots verified at the 401 boundary; the actual token must be obtained via CROSSx wallet OAuth in a browser and pasted via login.mjs.",
+  "service": {
+    "name": "CROSS WAVE",
+    "operator": "NEXUS Co., Ltd.",
+    "homepage": "https://wave.crosstoken.io",
+    "tagline": "Open Streamer Economy",
+    "rewardToken": "CROSS",
+    "rewardChainId": 612055,
+    "routes": {
+      "campaign": "https://wave.crosstoken.io/campaign",
+      "mission": "https://wave.crosstoken.io/mission",
+      "missionEnded": "https://wave.crosstoken.io/mission/ended",
+      "referral": "https://wave.crosstoken.io/referral",
+      "faq": "https://wave.crosstoken.io/faq"
+    },
+    "socials": {
+      "telegram": "https://t.me/wavecrosstoken",
+      "x": "https://x.com/crosswave_xyz",
+      "discord": "https://discord.com/invite/cross-gamechain",
+      "medium": "https://crosswave.medium.com",
+      "contact": "cs@to.nexus"
+    }
+  },
+  "endpoints": {
+    "apiBase": "https://wave-client-api.crosstoken.io",
+    "missionsPath": "/missions",
+    "missionsEndedPath": "/missions/ended",
+    "missionDetailPath": "/missions/{id}",
+    "gamesPath": "/games",
+    "faqsPath": "/faqs",
+    "whoamiPath": "/users/me",
+    "referralPath": "/referrals/me",
+    "participatePath": "/missions/{id}/participate",
+    "sessionHeader": { "kind": "bearer" },
+    "extraHeaders": { "X-Domain": "wave.crosstoken.io" },
+    "_unused": {
+      "loginNoncePath": "DELETED — wave does not expose SIWE; auth is CROSSx wallet OAuth via cross-auth.crosstoken.io. Use login.mjs to paste an access_token captured in browser DevTools.",
+      "loginVerifyPath": "DELETED — see loginNoncePath",
+      "siweDomain": "DELETED — see loginNoncePath",
+      "campaignsPath": "DELETED — back-end /campaigns returns 500. The 'campaign' concept on the front-end is a mission group; campaigns.mjs derives this from /missions response.",
+      "claimPath": "DELETED — wave rewards are operator-reviewed and auto-distributed at rewardScheduledAt; there is no user-initiated claim endpoint. claim.mjs returns no_op."
+    }
+  },
+  "_capture_status": "complete_for_v0_2"
+}
