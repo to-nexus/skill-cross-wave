@@ -6,7 +6,6 @@
 
 import 'dotenv/config';
 import { getService, getEndpoints, listSlots, registryVersion } from './_registry.mjs';
-import { loadSession } from './_session.mjs';
 
 const parsedIntent = { command: 'info' };
 
@@ -21,14 +20,10 @@ async function main() {
   const captured = slots.filter((k) => endpoints[k] !== null && endpoints[k] !== undefined && endpoints[k] !== '');
   const missing = slots.filter((k) => !captured.includes(k));
 
-  const session = loadSession();
-  const sessionStatus = session?.token
-    ? {
-        loggedIn: true,
-        source: session._path,
-        expiresAt: session.expiresAt ?? null,
-      }
-    : { loggedIn: false };
+  const sessionStatus = {
+    loggedIn: false,
+    accountActions: 'blocked_until_chat_safe_auth_exists',
+  };
 
   emit({
     ok: true,
@@ -52,10 +47,10 @@ async function main() {
       info:        { auth: false, status: 'alive' },
       missions:    { auth: false, status: 'alive' },
       campaigns:   { auth: false, status: 'alive (derived from /missions; back-end /campaigns is broken)' },
-      login:       { auth: 'paste', status: 'alive (paste access_token from browser DevTools)' },
-      whoami:      { auth: true,  status: 'alive' },
-      referral:    { auth: true,  status: 'alive' },
-      submit:      { auth: true,  status: 'alive (body shape inferred; first real call may need adjustment)' },
+      login:       { auth: true,  status: 'blocked (auth_out_of_scope)' },
+      whoami:      { auth: true,  status: 'blocked (auth_out_of_scope)' },
+      referral:    { auth: true,  status: 'blocked (auth_out_of_scope)' },
+      submit:      { auth: true,  status: 'blocked (auth_out_of_scope)' },
       claim:       { auth: false, status: 'no-op (CROSS WAVE has no user-initiated claim)' },
     },
     session: sessionStatus,
@@ -63,7 +58,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  if (process.env.DEBUG) process.stderr.write(String(err?.stack || err) + '\n');
+  if (process.env.DEBUG) process.stderr.write(String(err?.message || err) + '\n');
   emit({
     ok: false,
     parsedIntent,

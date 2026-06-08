@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-// referral.mjs — read the user's CROSS WAVE referral link and stats.
-//
-// Hits GET /referrals/me. Requires a persisted session.
-// Per the SKILL.md no-spamming rail: this subcommand only READS.
+// referral.mjs — blocked account-private CROSS WAVE referral path.
 
 import 'dotenv/config';
 import { waveFetch } from './_api.mjs';
@@ -33,7 +30,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  if (process.env.DEBUG) process.stderr.write(String(err?.stack || err) + '\n');
+  if (process.env.DEBUG) process.stderr.write(String(err?.message || err) + '\n');
   emit({
     ok: false,
     parsedIntent,

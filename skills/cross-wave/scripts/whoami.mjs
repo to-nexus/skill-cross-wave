@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-// whoami.mjs — read the authenticated user's CROSS WAVE profile.
-//
-// Requires a persisted session (run login first with a captured access_token).
+// whoami.mjs — blocked account-private CROSS WAVE profile path.
 //
 // Usage:
 //   node scripts/whoami.mjs
@@ -36,7 +34,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  if (process.env.DEBUG) process.stderr.write(String(err?.stack || err) + '\n');
+  if (process.env.DEBUG) process.stderr.write(String(err?.message || err) + '\n');
   emit({
     ok: false,
     parsedIntent,

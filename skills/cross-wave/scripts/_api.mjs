@@ -2,7 +2,7 @@
 // (https://wave-client-api.crosstoken.io). The back-end is a Spring Boot
 // service that:
 //   - requires `X-Domain` header on every request (any value)
-//   - accepts `Authorization: Bearer <jwt>` for authenticated calls
+//   - account-private calls remain blocked by the distributable skill
 //   - returns Spring paginated responses for list endpoints:
 //     {content: [...], pageable, first, last, size, number, sort,
 //      numberOfElements, empty}
@@ -101,7 +101,7 @@ export async function waveFetch(key, opts = {}) {
       if (res.status === 401) {
         err.code = 'unauthorized';
         err.exitCode = 2;
-        err.hint = 'token missing/expired — run `node scripts/login.mjs --token <…>` after capturing a fresh access_token from wave.crosstoken.io DevTools';
+        err.hint = 'account-private CROSS WAVE actions are outside this AI chat skill; use https://wave.crosstoken.io directly';
       } else {
         err.code = `http_${res.status}`;
       }

@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-// submit.mjs — submit a Shorts/TikTok video URL to a CROSS WAVE mission.
+// submit.mjs — blocked account-private CROSS WAVE submission path.
 //
-// Endpoint: POST /missions/{id}/participate
-// (Confirmed at the 401 boundary; exact body field names are inferred from
-// the wave.crosstoken.io UI — likely `videoUrl`. If the back-end rejects
-// with HTTP 400, see references/cross-wave.md §4 to capture the live body
-// shape from DevTools and adjust this file.)
+// Endpoint would be POST /missions/{id}/participate, but the distributable
+// skill does not execute account-private WAVE actions until a chat-safe auth
+// path exists.
 //
 // Safety rails (enforced regardless of capture state):
 //   1. URL allow-list   — host must be youtube.com / youtu.be / tiktok.com /
@@ -120,7 +118,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  if (process.env.DEBUG) process.stderr.write(String(err?.stack || err) + '\n');
+  if (process.env.DEBUG) process.stderr.write(String(err?.message || err) + '\n');
   emit({
     ok: false,
     parsedIntent,

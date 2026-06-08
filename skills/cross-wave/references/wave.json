@@ -1,7 +1,7 @@
 {
   "$schema": "internal: see references/cross-wave.md §2 for field semantics",
   "version": "0.2.0",
-  "note": "Read-path slots populated via JS-bundle reverse-engineering + anonymous endpoint probing on 2026-05-04. Authenticated slots verified at the 401 boundary; the actual token must be obtained via CROSSx wallet OAuth in a browser and pasted via login.mjs.",
+  "note": "Read-path slots populated via JS-bundle reverse-engineering + anonymous endpoint probing on 2026-05-04. Account-private slots are intentionally blocked in the distributable skill until CROSS WAVE exposes a chat-safe auth flow.",
   "service": {
     "name": "CROSS WAVE",
     "operator": "NEXUS Co., Ltd.",
@@ -37,7 +37,7 @@
     "sessionHeader": { "kind": "bearer" },
     "extraHeaders": { "X-Domain": "wave.crosstoken.io" },
     "_unused": {
-      "loginNoncePath": "DELETED — wave does not expose SIWE; auth is CROSSx wallet OAuth via cross-auth.crosstoken.io. Use login.mjs to paste an access_token captured in browser DevTools.",
+      "loginNoncePath": "DELETED — wave does not expose a chat-safe auth path for this skill.",
       "loginVerifyPath": "DELETED — see loginNoncePath",
       "siweDomain": "DELETED — see loginNoncePath",
       "campaignsPath": "DELETED — back-end /campaigns returns 500. The 'campaign' concept on the front-end is a mission group; campaigns.mjs derives this from /missions response.",

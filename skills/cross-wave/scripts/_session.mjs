@@ -1,15 +1,8 @@
-// _session.mjs — load/save the cross-wave session.
+// _session.mjs — legacy local session helpers.
 //
-// CROSS WAVE auth is CROSSx wallet OAuth, which is browser-driven and not
-// programmatically reproducible. So the "session" stored here is a JWT
-// access_token the user captured from their browser's DevTools after
-// logging into wave.crosstoken.io. Store path:
-//   ~/.claude/skills/cross-wave/.sessions/wave.json
-//
-// Stored fields:
-//   { token, expiresAt, savedAt }
-//
-// Permissions: written with chmod 600.
+// Account-private CROSS WAVE commands are disabled in the distributable skill.
+// These helpers remain only so older local installs fail with a structured
+// not_logged_in/auth_out_of_scope envelope instead of crashing.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,15 +18,6 @@ function ensureSessionDir() {
 }
 
 export function loadSession() {
-  // Env var shortcut — useful for one-shot calls where the user pastes a
-  // token without persisting it.
-  if (process.env.CROSS_WAVE_ACCESS_TOKEN) {
-    return {
-      token: process.env.CROSS_WAVE_ACCESS_TOKEN,
-      expiresAt: null,
-      _path: '<env:CROSS_WAVE_ACCESS_TOKEN>',
-    };
-  }
   if (!fs.existsSync(SESSION_FILE)) return null;
   try {
     const st = fs.statSync(SESSION_FILE);
@@ -76,17 +60,13 @@ export function deleteSession() {
 }
 
 export function requireSession() {
-  const s = loadSession();
-  if (!s || !s.token) {
-    const err = new Error(
-      'no persisted session — run `node scripts/login.mjs --token <…>` with an access_token captured from wave.crosstoken.io DevTools'
-    );
-    err.code = 'not_logged_in';
-    err.exitCode = 2;
-    err.hint = 'see references/cross-wave.md §3 for how to capture a token';
-    throw err;
-  }
-  return s;
+  const err = new Error(
+    'CROSS WAVE account actions are outside this AI chat skill. Use https://wave.crosstoken.io directly.'
+  );
+  err.code = 'auth_out_of_scope';
+  err.exitCode = 2;
+  err.hint = 'supported commands here: info, missions, campaigns, claim';
+  throw err;
 }
 
 /**
